@@ -3,7 +3,7 @@
 <b>Professor:</b> Carlos
 
 Tags:
-- inicio
+- inicial
 - usuarios
 - tarefas
 - jwt
