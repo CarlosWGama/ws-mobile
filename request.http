@@ -1,0 +1,29 @@
+@baseURL = http://localhost:8000/api
+
+
+################# USUARIO ####################
+
+
+###
+POST {{baseURL}}/usuarios
+Content-Type: application/json
+
+{
+    "usuario": {
+        "nome": "Carlos",
+        "email": "carlos@teste.com",
+        "senha": "123456"
+    }
+}
+
+###
+POST {{baseURL}}/login
+Content-Type: application/json
+
+{
+    "email": "carlos@teste.com",
+    "senha": "123456"
+}
+
+###
+POST {{baseURL}}/tarefas

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/usuarios', 'Api\UsuariosController@registrar');
+Route::post('/login', 'Api\UsuariosController@logar');
+
+Route::group(['prefix' => 'tarefas'], function () {
+    Route::post('/', 'Api\TarefasController@cadastrar');
+    Route::get('/', 'Api\TarefasController@listar');
+    Route::get('/{id}', 'Api\TarefasController@buscar');
+    Route::put('/{id}', 'Api\TarefasController@atualizar');
+    Route::delete('/{id}', 'Api\TarefasController@deletar');
 });
