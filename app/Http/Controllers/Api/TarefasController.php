@@ -10,7 +10,7 @@ use App\Models\Tarefa;
  * @package API
  * Classe responsável por Controlar as requisições da API envolvendo usuário
  */
-class TarefasController extends Controller {
+class TarefasController extends ApiController {
     
     /** Cadastra uma nova tarefa */
     public function cadastrar(Request $request) {
@@ -25,7 +25,7 @@ class TarefasController extends Controller {
         $tarefa = $request->tarefa;
         //Converte a data de d/m/Y para Y-m-d
         $tarefa['data'] = implode('-', array_reverse(explode('/', $tarefa['data'])));
-        $tarefa['usuario_id'] = 1; //Fixo por enquanto
+        $tarefa['usuario_id'] = $this->getUsuarioID($request); //Fixo por enquanto
         unset($tarefa['imagem']); //Remove para não salvar a imagem como base64 no banco. 
 
         //Salva a Tarefa
@@ -42,7 +42,7 @@ class TarefasController extends Controller {
 
     /** Lista tarefas de um usuário */
     public function listar(Request $request) {
-        $usuarioID = 1;
+        $usuarioID = $this->getUsuarioID($request);
         $tarefas = Tarefa::where('usuario_id', $usuarioID)->get();
         return response()->json($tarefas, 200);
     }
@@ -51,14 +51,14 @@ class TarefasController extends Controller {
      * @param $id | id da tarefa
      */
     public function buscar(Request $request, int $id) {
-        $usuarioID = 1;
+        $usuarioID = $this->getUsuarioID($request);
         $tarefa = Tarefa::where('id', $id)->where('usuario_id', $usuarioID)->firstOrFail();
         return response()->json($tarefa, 200);
     }
 
     /** Atualiza uma tarefa de um usuário */
     public function atualizar(Request $request, int $id) {
-        $usuarioID = 1;
+        $usuarioID = $this->getUsuarioID($request);
         $tarefa = Tarefa::where('id', $id)->where('usuario_id', $usuarioID)->firstOrFail();
 
         $validation = Validator::make($request->tarefa, [
@@ -88,7 +88,7 @@ class TarefasController extends Controller {
      * @param $id | id da tarefa
      */
     public function remover(Request $request, int $id) {
-        $usuarioID = 1;
+        $usuarioID = $this->getUsuarioID($request);
         $tarefa = Tarefa::where('usuario_id', $usuarioID)->where('id', $id)->firstOrFail();
         $tarefa->delete();
         return response()->json('Tarefa excluída com sucesso', 200);
@@ -100,8 +100,7 @@ class TarefasController extends Controller {
      * @param $nomeArquivo | Qual nome do arquivo para ser salvo
      */
     private function salvarImagem(string $uriBase64, string $nomeArquivo) {
-        $vetor = explode(',', $uriBase64);
-        $imagemBase64 = end($vetor);
+        $imagemBase64 = end(explode(',', $uriBase64));
         file_put_contents(storage_path('app/public/'.$nomeArquivo), file_get_contents($imagemBase64));
     }
 }

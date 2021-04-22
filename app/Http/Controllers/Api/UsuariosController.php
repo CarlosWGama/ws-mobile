@@ -6,18 +6,22 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Usuario;
+use Firebase\JWT\JWT;
+
 /**
  * @package API
  * Classe responsável por Controlar as requisições da API envolvendo usuário
  */
-class UsuariosController extends Controller {
+class UsuariosController extends ApiController {
     
     /** Loga o usuário */
     public function logar(Request $request) {
         $usuario = Usuario::where('email', $request->email)
                             ->where('senha', md5($request->senha))
                             ->firstOrFail(); //Senão achar retorna 404
-        return response()->json($usuario, 200);
+
+        $jwt = JWT::encode(['id' => $usuario->id], config('jwt.senha'));
+        return response()->json(['jwt' => $jwt], 200);
     }
 
 

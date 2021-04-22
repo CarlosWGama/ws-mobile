@@ -1,5 +1,5 @@
 @baseURL = http://localhost:8000/api
-
+@jwt = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Mn0.EVGC36tvMWZqq24TdpAqBqbSWBHcUzqGWeYy5jO10MU
 
 ################# USUARIO ####################
 
@@ -29,6 +29,7 @@ Content-Type: application/json
 
 ### Cadastrar
 POST {{baseURL}}/tarefas
+Authorization: Bearer {{jwt}}
 Content-Type: application/json
 
 {
@@ -40,12 +41,14 @@ Content-Type: application/json
 
 ### Buscar
 GET {{baseURL}}/tarefas
+Authorization: Bearer {{jwt}}
 Content-Type: application/json
 
 
 ### ATUALIZAR
 @tarefaID = 1
 PUT {{baseURL}}/tarefas/{{tarefaID}}
+Authorization: Bearer {{jwt}}
 Content-Type: application/json
 
 {
@@ -58,3 +61,4 @@ Content-Type: application/json
 
 ### DELETAR
 DELETE {{baseURL}}/tarefas/{{tarefaID}}
+Authorization: Bearer {{jwt}}
