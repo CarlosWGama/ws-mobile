@@ -25,5 +25,36 @@ Content-Type: application/json
     "senha": "123456"
 }
 
-###
+################ TAREFAS ######################
+
+### Cadastrar
 POST {{baseURL}}/tarefas
+Content-Type: application/json
+
+{
+    "tarefa": {
+        "descricao": "Teste",
+        "data": "2021-04-22"
+    }
+}
+
+### Buscar
+GET {{baseURL}}/tarefas
+Content-Type: application/json
+
+
+### ATUALIZAR
+@tarefaID = 1
+PUT {{baseURL}}/tarefas/{{tarefaID}}
+Content-Type: application/json
+
+{
+    "tarefa": {
+        "descricao": "Teste 1",
+        "data": "2021-05-22"
+    }
+}
+
+
+### DELETAR
+DELETE {{baseURL}}/tarefas/{{tarefaID}}
