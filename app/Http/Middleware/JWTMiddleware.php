@@ -19,6 +19,8 @@ class JWTMiddleware {
         try {
             $jwt = $request->bearerToken();
             $dados = JWT::decode($jwt, config('jwt.senha'), ['HS256']);
+            if (time() > $dados->exp)  //Opcional caso tenha botado prazo para expirar
+                return response()->json(['erro' => 'Token expirado'], 403);
             return $next($request);
         } catch (\Exception $e) { 
             //Adicionar \ antes no Exception, porque estamos no namespace App\Http\Middleware
