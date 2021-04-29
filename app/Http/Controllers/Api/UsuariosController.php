@@ -19,8 +19,11 @@ class UsuariosController extends ApiController {
         $usuario = Usuario::where('email', $request->email)
                             ->where('senha', md5($request->senha))
                             ->firstOrFail(); //Senão achar retorna 404
-
-        $jwt = JWT::encode(['id' => $usuario->id], config('jwt.senha'));
+        $payload = [
+            'sub'   => $usuario->id,
+            'exp'   => time() + (60*60*24*7) //Opcional para expirar em uma semana
+        ];
+        $jwt = JWT::encode($payload, config('jwt.senha'));
         return response()->json(['jwt' => $jwt], 200);
     }
 
