@@ -102,6 +102,6 @@ class TarefasController extends ApiController {
     private function salvarImagem(string $uriBase64, string $nomeArquivo) {
         $imagem = explode(',', $uriBase64);
         $imagemBase64 = end($imagem);
-        file_put_contents(storage_path('app/public/'.$nomeArquivo), base64_decode($imagemBase64));
+        file_put_contents(storage_path('app/public/fotos/'.$nomeArquivo), base64_decode($imagemBase64));
     }
 }
