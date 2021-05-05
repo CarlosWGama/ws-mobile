@@ -1,5 +1,6 @@
 @baseURL = http://localhost:8000/api
-
+# @baseURL = http://192.168.0.19/api
+@jwt = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjYsImV4cCI6MTYyMDg0NjU3N30.Uz4X7T4N5c5ZIRHgklBCvE1sxL62hTRNG39-SkkrMto
 
 ### Cadastro de Usuário
 POST {{baseURL}}/usuarios
@@ -19,7 +20,7 @@ POST {{baseURL}}/login
 Content-Type: application/json
 
 {
-    "email": "carlos3123123@teste.com",
+    "email": "carlos@teste.com",
     "senha": "123456"
 }
 
@@ -28,6 +29,7 @@ Content-Type: application/json
 ### Cadastro de tarefa
 POST {{baseURL}}/tarefas
 Content-Type: application/json
+Authorization: Bearer {{jwt}}
 
 {
     "tarefa": {
@@ -40,14 +42,17 @@ Content-Type: application/json
 
 #### Busca tarefas do usuário
 GET {{baseURL}}/tarefas
+Authorization: Bearer {{jwt}}
 
 #### Busca uma tarefa do usuário
 GET {{baseURL}}/tarefas/15
+Authorization: Bearer {{jwt}}
 
 
 ### Atualizando Imagens
 PUT {{baseURL}}/tarefas/15
 Content-Type: application/json
+Authorization: Bearer {{jwt}}
 
 {
     "tarefa": {
@@ -60,3 +65,4 @@ Content-Type: application/json
 
 ###DEletar a tarefa
 DELETE {{baseURL}}/tarefas/11
+Authorization: Bearer {{jwt}}
