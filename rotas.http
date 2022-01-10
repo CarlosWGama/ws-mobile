@@ -1,4 +1,4 @@
-@baseURL = http://192.168.0.8/api
+@baseURL = http://127.0.0.1:8000/api
 @token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsImV4cCI6MTYzNDg1NjM1NH0.kTxlWXGQ2I9v_Fm0am5PJcZV68D-NDyZ1qWUtC6u73o
 
 POST {{baseURL}}/usuarios
@@ -17,7 +17,7 @@ POST {{baseURL}}/login
 Content-Type: application/json
 
 {
-    "email": "teste@teste.com",
+    "email": "tes@teste.com",
     "senha": "123456"
 }
 

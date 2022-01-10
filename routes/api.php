@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\TarefasController;
+use App\Http\Controllers\Api\UsuariosController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::post('/usuarios', [UsuariosController::class, 'registrar']);
+Route::post('/login', [UsuariosController::class, 'logar']);
+
+Route::group(['prefix' => 'tarefas'], function () {
+    Route::post('/', [TarefasController::class, 'cadastrar']);
+    Route::get('/', [TarefasController::class, 'listar']);
+    Route::get('/{id}', [TarefasController::class, 'buscar']);
+    Route::put('/{id}', [TarefasController::class, 'atualizar']);
+    Route::delete('/{id}', [TarefasController::class, 'deletar']);
 });
