@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Usuario;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Tela resposável por manipular as ações das telas de Login
@@ -17,8 +18,8 @@ class LoginController extends Controller {
 
     /** Faz com o que o usuário tente realizar o login */
     public function logar(Request $request) {
-        $usuario = Usuario::where('email', $request->email)->where('senha', md5($request->senha))->first();
-        if ($usuario != null) {
+        $usuario = Usuario::where('email', $request->email)->first();
+        if ($usuario != null && Hash::check($request->senha, $usuario->senha)) {
             session(['usuario' => $usuario]);
             return redirect()->route('dashboard');
         } else

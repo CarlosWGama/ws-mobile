@@ -16,7 +16,7 @@ class UsuarioSeeder extends Seeder
         Usuario::create([
             'nome'  => 'Admin',
             'email' => 'admin@teste.com',
-            'senha' => md5('123456'),
+            'senha' => bcrypt('123456'),
             'admin' => true
         ]);
     }
