@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Usuario;
+use Firebase\JWT\JWT;
 use Illuminate\Support\Facades\Hash;
 
 /**
  * @package API
  * Classe responsável por Controlar as requisições da API envolvendo usuário
  */
-class UsuariosController extends Controller {
+class UsuariosController extends ApiController {
     
     /** Loga o usuário */
     public function logar(Request $request) {
@@ -20,8 +21,15 @@ class UsuariosController extends Controller {
                             ->firstOrFail(); //Senão achar retorna 404
 
         //Checa se a senha está correta
-        if (Hash::check($request->senha, $usuario->senha));
-            return response()->json($usuario, 200);
+        if (Hash::check($request->senha, $usuario->senha)) {
+            $payload = [
+                'sub'   => $usuario->id,
+                'exp'   => time() + (60*60*24*7) //Opcional para expirar em uma semana
+            ];
+            
+            $jwt = JWT::encode($payload, config('jwt.senha'));
+            return response()->json(['jwt' => $jwt], 200);
+        }
         
         return response()->json('Usuario não encontrado', 404);
     }
