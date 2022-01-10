@@ -28,5 +28,5 @@ Route::group(['prefix' => 'tarefas'], function () {
     Route::get('/', [TarefasController::class, 'listar']);
     Route::get('/{id}', [TarefasController::class, 'buscar']);
     Route::put('/{id}', [TarefasController::class, 'atualizar']);
-    Route::delete('/{id}', [TarefasController::class, 'deletar']);
+    Route::delete('/{id}', [TarefasController::class, 'remover']);
 });
